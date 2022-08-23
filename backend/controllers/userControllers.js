@@ -1,11 +1,15 @@
 const asyncHandler = require('express-async-handler')
 
+const User = require('../models/selectmodel')
+
 //@desc  Get user
 //route  get:/api/user
 //access private
 
 const getUser = asyncHandler(async (req,res) => {
-    res.status(200).json({message:'get user'})
+
+    const goals = await User.find()
+    res.status(200).json({goals})
 })
 
 
@@ -18,12 +22,16 @@ const setUsers =  asyncHandler(async(req,res) => {
     res.status(400)
     throw new Error('Please enter text')
    }
-    res.status(200).json({message:'post user'})
+    const goal = await Goal.create({
+        text: req.body.text
+    })
+    res.status(200).json({goal})
 })
 
 //@desc  Update user
 //route  Put :/api/user
 //access private
+ 
 
 const updateUsers = asyncHandler(async (req,res) => {
     res.status(200).json({message:'put user'})
