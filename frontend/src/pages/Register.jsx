@@ -1,5 +1,9 @@
 import { useState, useEffect } from 'react'
+import {useSelector, useDispatch} from 'react-redux'
+import {useNavigate} from 'react-router-dom'
+import {toast } from 'react-toastify'
 import { FaUser } from 'react-icons/fa'
+import {register, reset} from '../features/auth/authSlice'
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -11,6 +15,13 @@ const Register = () => {
 
   const { name, email, password, password2 } = formData
 
+  const navigate = useNavigate()
+  const dispatch = useDispatch()  
+const {user, isLoading, isError, isSuccess, message} =  useSelector (
+  (state) => state.auth
+
+) 
+
   const onChange = (e) => {
     setFormData({
       ...formData,
@@ -19,6 +30,26 @@ const Register = () => {
 
   }
 
+  useEffect(() => {
+
+  },[user, isLoading, isError, isSuccess, message, navigate, dispatch ])
+
+  const onSubmit=(e) => {
+    e.preventDefault()
+
+    if(password2 !== password2){
+      toast.error('password do not match')
+      
+    }else{
+      const userData = {
+        name,
+        email,
+        password,
+      }
+      dispatch(register(userData))
+    }
+
+  }
   return (
     <>
       <section>
@@ -78,7 +109,7 @@ const Register = () => {
             />
           </div>
           <div className='form-group'>
-          <button className='btn btn-block ' type = 'submit' >Login</button>
+          <button className='btn btn-block ' type = 'submit'  onSubmit={onSubmit}>Login</button>
         </div>
         </form>
       </section>

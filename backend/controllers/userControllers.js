@@ -7,7 +7,6 @@ const User = require('../models/selectmodel')
 //access private
 
 const getUser = asyncHandler(async (req,res) => {
-
     const goals = await User.find()
     res.status(200).json({goals})
 })

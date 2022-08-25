@@ -11,6 +11,7 @@ connectDB()
 app.use(express.json())
 app.use(express.urlencoded({extended: false }))
 app.use('/api/user',require('./routes/userRoutes'))
+app.use('/api/users',require('./routes/usersRoutes'))
 app.use(errorHandler)
 
-app.listen(port, ()=> console.log('server started on port ${port}'))
+app.listen(port, ()=> console.log(`server started on port: ${port}`))
